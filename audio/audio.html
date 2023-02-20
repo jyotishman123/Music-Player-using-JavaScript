@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+
+        .container {
+            height: 370px;
+            width: 250px;
+        
+          border-top-left-radius: 25px;
+          border-bottom-right-radius: 25px;
+
+            background-color: rgb(21, 22, 22);
+            box-shadow: -3px 4px 35px 4px rgba(0, 0, 0, 0.8);
+            -webkit-box-shadow: -3px 4px 35px 4px rgba(0, 0, 0, 0.8);
+            -moz-box-shadow: -3px 4px 35px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        body {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(79, 78, 78);
+             
+        }
+        .heading{
+             
+            padding: 15px;
+            text-align: center;
+            color: rgb(51, 208, 64);
+            font-weight: 600;
+            
+        }
+        .playlist{
+            text-align: center;
+        }
+        .playlist p{
+            color: rgb(118, 119, 121);
+            font-family: Poppins;
+            font-size: 10px;
+        }
+        .imagearea{
+            height: 180px;
+            width: 190px;
+             
+            margin-top: 15px;
+            margin: 15px auto;
+        }
+        img{
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
+        }
+        .songInfo{
+            text-align: center;
+            padding: 5px;
+        }
+        h6{
+            color: #fff;
+        }
+        .fas{
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .far{
+            color: #fff;
+            font-size: 25px;
+            cursor: pointer;
+        }
+        .navigation{
+            display: flex;
+            justify-content: space-evenly;
+            padding: 15px;
+            align-items: center;
+        }
+         .fas:hover{
+            color: rgb(15, 242, 23);
+        }
+        .far:hover{
+            color: rgb(24, 211, 40);
+
+        }
+        #range{
+            width: 100%;
+            color: #fff;
+            cursor: pointer;
+            
+        }
+        .progress{
+            width: 80%;
+            margin: auto;
+           
+             
+        }
+      
+        
+    </style>
+</head>
+
+<body>
+    <audio src="ranja.mp3" id="audio"></audio>
+    <div class="container">
+  <div class="heading"><h2>Spotify</h2></div>
+  <div class="playlist"><p>My Playlist</p></div>
+   <div class="imagearea">
+       <img src="image12.jpg" alt="" id="img">
+   </div>
+   <div class="songInfo"><h6 id="songName">Ranja</h6></div>
+     <div class="progress">
+         <input type="range" name="" id="range" value="0">
+     </div>
+   <div class="navigation">
+    <i class="fas fa-fast-backward" id="prev"></i>
+    <i class="far fa-play-circle" id="play"></i>
+    <i class="fas fa-fast-forward" id="next"></i>
+   </div>
+
+    </div>
+</body>
+<script>
+    let prevButton = document.getElementById('prev');
+    let playButton = document.getElementById('play');
+    let nextButton = document.getElementById('next');
+    let songName = document.getElementById('songName');
+    let image = document.getElementById('img');
+    let audio = document.getElementById('audio');
+    let counter = 0;
+    let range = document.getElementById('range')
+   
+
+    let songs = [
+    {name:"Ranja", song:"ranja.mp3",songimg:"image12.jpg"},
+    {name:"Raat Zara si", song:"raat.mp3",songimg:"image13.jpg"},
+    {name:"Liggi", song:"liggi.mp3",songimg:"image3.jpg"},
+    {name:"Udd Gaye", song:"udd.mp3",songimg:"image8.jpg"},
+    {name:"Bijjle", song:"bijlee.mp3",songimg:"image15.jpg"},
+    {name:"Excues", song:"ex.mp3",songimg:"image6.jpg"}
+    ]
+
+    playButton.addEventListener('click',()=>{
+         if(audio.paused){
+             audio.play()
+             playButton.classList.replace('fa-play-circle','fa-pause-circle')
+         }
+         else{
+            audio.pause()
+             playButton.classList.replace('fa-pause-circle','fa-play-circle')
+
+         }
+         
+
+
+    })
+
+   
+   
+
+    function load(audioElement){
+        songName.innerHTML = audioElement.name;
+        audio.src = audioElement.song;
+        image.src = audioElement.songimg
+        audio.play()
+        if(audio.play()){
+            playButton.classList.replace('fa-play-circle','fa-pause-circle')
+
+        }
+        
+     
+
+
+
+    }
+    
+
+    nextButton.addEventListener('click',()=>{
+        let s = songs[counter];
+       counter++;
+        load(s)
+        if(counter===songs.length-1){
+             counter=0
+            
+        }
+         
+      
+
+    })
+    prevButton.addEventListener('click',()=>{
+        let s = songs[counter];
+       
+     
+        
+      
+        if(counter===0){
+            counter=songs.length -1
+        }
+        counter--;
+
+        load(s)
+         
+      
+
+    });
+
+  
+    audio.addEventListener('timeupdate',()=>{
+
+        range.value = audio.currentTime
+    })
+
+   range.addEventListener('change',()=>{
+        audio.currentTime = range.value
+   })
+ 
+</script>
+
+</html>
